@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>特锐德 · 大客户产品手册</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060d17;
+      --bg-deep: #030810;
+      --surface: #0c1a2e;
+      --surface-raised: #112240;
+      --surface-hover: #1a3055;
+      --accent: #00d4aa;
+      --accent-glow: rgba(0, 212, 170, 0.15);
+      --accent-dim: #00a885;
+      --accent-orange: #ff8c42;
+      --accent-blue: #4da6ff;
+      --accent-purple: #a78bfa;
+      --text-primary: #e6f1ff;
+      --text-secondary: #8892b0;
+      --text-muted: #4a5578;
+      --border: rgba(100, 150, 255, 0.08);
+      --border-accent: rgba(0, 212, 170, 0.2);
+      --sidebar-w: 280px;
+      --header-h: 64px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ===== Background Atmosphere ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background:
+        radial-gradient(ellipse at 15% 20%, rgba(0, 212, 170, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 80%, rgba(77, 166, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 0%, var(--bg) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== Grid Lines Background ===== */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 170, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 170, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      position: fixed;
+      top: 0; left: var(--sidebar-w); right: 0;
+      height: var(--header-h);
+      background: rgba(6, 13, 23, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .breadcrumb span { color: var(--accent); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 16px 8px 36px;
+      color: var(--text-primary);
+      font-size: 13px;
+      width: 240px;
+      font-family: 'Noto Sans SC', sans-serif;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+      width: 300px;
+    }
+
+    .search-box input::placeholder { color: var(--text-muted); }
+
+    .search-box svg {
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 14px; height: 14px;
+    }
+
+    .version-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid var(--border-accent);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* ===== Sidebar ===== */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      background: var(--bg-deep);
+      border-right: 1px solid var(--border);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-text {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 900;
+      font-size: 22px;
+      color: var(--text-primary);
+      letter-spacing: 2px;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 4px;
+      letter-spacing: 1px;
+    }
+
+    .logo-accent {
+      color: var(--accent);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 0;
+    }
+
+    .nav-group {
+      margin-bottom: 8px;
+    }
+
+    .nav-group-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 12px 24px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 24px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 400;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+    }
+
+    .nav-item:hover {
+      color: var(--text-primary);
+      background: rgba(0, 212, 170, 0.04);
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+      background: var(--accent-glow);
+      border-left-color: var(--accent);
+      font-weight: 500;
+    }
+
+    .nav-item .nav-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    .nav-item.active .nav-icon { opacity: 1; }
+
+    .sidebar-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ===== Main Content ===== */
+    .main {
+      margin-left: var(--sidebar-w);
+      padding-top: var(--header-h);
+      position: relative;
+      z-index: 1;
+    }
+
+    .content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 48px 120px;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      padding: 60px 0 50px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 50px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.8;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 32px;
+    }
+
+    .hero-stat {
+      text-align: left;
+    }
+
+    .hero-stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .hero-stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ===== Section ===== */
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid var(--border-accent);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    /* ===== Product Cards ===== */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+      border-color: var(--border-accent);
+      box-shadow: 0 8px 32px rgba(0, 212, 170, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .product-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .product-card-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .product-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .product-icon.dc { background: rgba(0, 212, 170, 0.12); color: var(--accent); }
+    .product-icon.ac { background: rgba(77, 166, 255, 0.12); color: var(--accent-blue); }
+    .product-icon.box { background: rgba(255, 140, 66, 0.12); color: var(--accent-orange); }
+    .product-icon.stack { background: rgba(167, 139, 250, 0.12); color: var(--accent-purple); }
+
+    .product-name {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .product-model {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .product-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .product-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .tag-hot {
+      background: rgba(255, 100, 100, 0.12);
+      color: #ff7b7b;
+      border: 1px solid rgba(255, 100, 100, 0.2);
+    }
+
+    .tag-new {
+      background: rgba(0, 212, 170, 0.12);
+      color: var(--accent);
+      border: 1px solid var(--border-accent);
+    }
+
+    .tag-star {
+      background: rgba(255, 200, 50, 0.12);
+      color: #ffc832;
+      border: 1px solid rgba(255, 200, 50, 0.2);
+    }
+
+    .toggle-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .product-card.open .toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .product-card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .product-card.open .product-card-body {
+      max-height: 2000px;
+    }
+
+    .product-card-content {
+      padding: 0 28px 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .product-desc {
+      padding-top: 20px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    .spec-table th {
+      text-align: left;
+      padding: 10px 16px;
+      background: rgba(0, 212, 170, 0.04);
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border-accent);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .spec-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .spec-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .spec-table tr:hover td {
+      background: rgba(0, 212, 170, 0.02);
+    }
+
+    .spec-label {
+      color: var(--text-primary);
+      font-weight: 500;
+      white-space: nowrap;
+      width: 160px;
+    }
+
+    .spec-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent-blue);
+    }
+
+    .spec-highlight {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ===== Scenario Cards ===== */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .scenario-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+
+    .scenario-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .scenario-name {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .scenario-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ===== Glossary ===== */
+    .glossary-filter {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent-glow);
+      border-color: var(--border-accent);
+      color: var(--accent);
+    }
+
+    .glossary-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .glossary-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .glossary-item:hover {
+      border-color: var(--border-accent);
+    }
+
+    .glossary-item.expanded {
+      border-color: var(--border-accent);
+      background: var(--surface-raised);
+    }
+
+    .glossary-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .glossary-term {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .glossary-cn {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .glossary-en {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      background: var(--accent-glow);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .glossary-abbr {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent-orange);
+      background: rgba(255, 140, 66, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .glossary-arrow {
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+      font-size: 12px;
+    }
+
+    .glossary-item.expanded .glossary-arrow {
+      transform: rotate(90deg);
+    }
+
+    .glossary-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .glossary-item.expanded .glossary-detail {
+      max-height: 500px;
+    }
+
+    .glossary-detail-inner {
+      padding-top: 14px;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .glossary-detail-inner strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .glossary-example {
+      margin-top: 10px;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.6;
+    }
+
+    /* ===== Comparison Table ===== */
+    .compare-table-wrap {
+      overflow-x: auto;
+      margin-top: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .compare-table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .compare-table thead th {
+      background: var(--surface-raised);
+      padding: 14px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--border-accent);
+      white-space: nowrap;
+    }
+
+    .compare-table thead th:first-child {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .compare-table tbody td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .compare-table tbody tr:hover td {
+      background: rgba(0, 212, 170, 0.02);
+    }
+
+    .compare-table tbody td:first-child {
+      color: var(--text-primary);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .compare-table .val-hot {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ===== Tip Box ===== */
+    .tip-box {
+      background: rgba(0, 212, 170, 0.05);
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 24px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .tip-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .tip-content {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .tip-content strong {
+      color: var(--accent);
+    }
+
+    /* ===== Animations ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in:nth-child(2) { animation-delay: 0.1s; }
+    .fade-in:nth-child(3) { animation-delay: 0.2s; }
+    .fade-in:nth-child(4) { animation-delay: 0.3s; }
+
+    /* ===== Scrollbar ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface-hover); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    /* ===== Back to Top ===== */
+    .back-top {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--surface-raised);
+      border: 1px solid var(--border-accent);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 50;
+      font-size: 18px;
+    }
+
+    .back-top.visible {
+      opacity: 1;
+    }
+
+    .back-top:hover {
+      background: var(--accent);
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
+
+    /* ===== Mobile Menu Toggle ===== */
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 14px; left: 14px;
+      width: 40px; height: 40px;
+      background: var(--surface-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 300;
+      font-size: 18px;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      :root { --sidebar-w: 0px; }
+      .sidebar { transform: translateX(-100%); width: 280px; transition: transform 0.3s ease; }
+      .sidebar.open { transform: translateX(0); }
+      .header { left: 0; padding: 0 16px 0 56px; }
+      .content { padding: 32px 20px 100px; }
+      .mobile-toggle { display: flex; }
+      .hero h1 { font-size: 28px; }
+      .hero-stats { gap: 24px; flex-wrap: wrap; }
+      .scenario-grid { grid-template-columns: 1fr; }
+      .search-box input { width: 160px; }
+      .search-box input:focus { width: 200px; }
+    }
+
+    @media (max-width: 600px) {
+      .product-tags { display: none; }
+      .header-right { gap: 10px; }
+      .version-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <!-- Mobile Menu Toggle -->
+  <div class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text">特<span class="logo-accent">锐</span>德</div>
+      <div class="logo-sub">TGOOD · PRODUCT MANUAL</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-title">概览</div>
+        <a class="nav-item active" href="#overview" onclick="setActive(this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          产品总览
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-title">充电设备</div>
+        <a class="nav-item" href="#dc-charger" onclick="setActive(this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          直流充电桩
+        </a>
+        <a class="nav-item" href="#ac-charger" onclick="setActive(this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          交流充电桩
+        </a>
+        <a class="nav-item" href="#charging-stack" onclick="setActive(this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          充电堆 / 群充
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-title">配电设备</div>
+        <a class="nav-item" href="#box-substation" onclick="setActive(this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/><line x1="14" y1="10" x2="14" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/></svg>
+          箱式变电站
+        </a>
+        <a class="nav-item" href="#energy-cabinet" onclick="setActive(this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 18h6M12 6v4"/></svg>
+          储能柜
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-title">对比与术语</div>
+        <a class="nav-item" href="#compare" onclick="setActive(this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          产品对比
+        </a>
+        <a class="nav-item" href="#glossary" onclick="setActive(this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          专业术语词典
+        </a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      v2.4.0 · 2025.04 更新<br>
+      © TGOOD 特锐德电气
+    </div>
+  </aside>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="breadcrumb">产品手册 / <span id="currentSection">产品总览</span></div>
+    </div>
+    <div class="header-right">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="搜索产品或术语..." id="searchInput" oninput="handleSearch(this.value)">
+      </div>
+      <span class="version-badge">v2.4</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="content">
+
+      <!-- Hero -->
+      <section class="hero fade-in" id="overview">
+        <div class="hero-eyebrow">TGOOD PRODUCT MANUAL</div>
+        <h1>大客户产品手册</h1>
+        <p class="hero-desc">
+          本手册涵盖特锐德核心充电设备与配电产品的技术参数、应用场景及专业术语，帮助大客户代表在商务沟通中快速查阅、精准传达产品价值。
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value">5+</div>
+            <div class="hero-stat-label">核心产品线</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">600kW</div>
+            <div class="hero-stat-label">最大单桩功率</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">97.5%</div>
+            <div class="hero-stat-label">最高转换效率</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">50+</div>
+            <div class="hero-stat-label">专业术语收录</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Product Section: DC Charger -->
+      <section class="section fade-in" id="dc-charger">
+        <div class="section-header">
+          <span class="section-number">01</span>
+          <h2 class="section-title">直流充电桩</h2>
+        </div>
+
+        <div class="product-grid">
+          <!-- DC 240kW -->
+          <div class="product-card" onclick="toggleCard(this)">
+            <div class="product-card-header">
+              <div class="product-card-left">
+                <div class="product-icon dc">⚡</div>
+                <div>
+                  <div class="product-name">240kW 直流一体式充电桩</div>
+                  <div class="product-model">TCZ-240A / 双枪</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div class="product-tags">
+                  <span class="product-tag tag-hot">热销</span>
+                </div>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="product-card-body">
+              <div class="product-card-content">
+                <p class="product-desc">
+                  面向公共充电站、物流园区及商业综合体的主力机型。采用高效功率模块，支持双枪同时充电与智能功率分配，兼容市面上99%的国标电动车型。
+                </p>
+                <table class="spec-table">
+                  <tr><td class="spec-label">额定功率</td><td class="spec-value">240kW</td></tr>
+                  <tr><td class="spec-label">输出电压范围</td><td class="spec-value">200–1000V DC</td></tr>
+                  <tr><td class="spec-label">最大输出电流</td><td class="spec-value">250A（单枪）</td></tr>
+                  <tr><td class="spec-label">充电枪数量</td><td class="spec-value">双枪</td></tr>
+                  <tr><td class="spec-label">功率分配方式</td><td class="spec-value">智能动态分配</td></tr>
+                  <tr><td class="spec-label">转换效率</td><td class="spec-value spec-highlight">≥ 96%</td></tr>
+                  <tr><td class="spec-label">防护等级</td><td class="spec-value">IP54</td></tr>
+                  <tr><td class="spec-label">工作温度</td><td class="spec-value">-30°C ~ +55°C</td></tr>
+                  <tr><td class="spec-label">通信接口</td><td class="spec-value">4G / 以太网 / WiFi</td></tr>
+                  <tr><td class="spec-label">屏幕</td><td class="spec-value">7英寸 LCD 触摸屏</td></tr>
+                  <tr><td class="spec-label">支持协议</td><td class="spec-value">GB/T 18487、GB/T 27930</td></tr>
+                  <tr><td class="spec-label">尺寸（宽×深×高）</td><td class="spec-value">700×560×1750 mm</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- DC 360kW -->
+          <div class="product-card" onclick="toggleCard(this)">
+            <div class="product-card-header">
+              <div class="product-card-left">
+                <div class="product-icon dc">⚡</div>
+                <div>
+                  <div class="product-name">360kW 直流分体式充电桩</div>
+                  <div class="product-model">TCZ-360B / 功率柜+充电终端</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div class="product-tags">
+                  <span class="product-tag tag-new">新一代</span>
+                </div>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="product-card-body">
+              <div class="product-card-content">
+                <p class="product-desc">
+                  采用功率柜与充电终端分体架构，适用于大型充电场站。功率模块可按需配置，支持未来扩容。液冷散热设计确保高负载稳定运行。
+                </p>
+                <table class="spec-table">
+                  <tr><td class="spec-label">额定功率</td><td class="spec-value">360kW（可扩至 480kW）</td></tr>
+                  <tr><td class="spec-label">输出电压范围</td><td class="spec-value">200–1000V DC</td></tr>
+                  <tr><td class="spec-label">最大输出电流</td><td class="spec-value">400A（单枪）</td></tr>
+                  <tr><td class="spec-label">充电终端数</td><td class="spec-value">最多 6 终端</td></tr>
+                  <tr><td class="spec-label">散热方式</td><td class="spec-value spec-highlight">液冷散热</td></tr>
+                  <tr><td class="spec-label">转换效率</td><td class="spec-value">≥ 96.5%</td></tr>
+                  <tr><td class="spec-label">防护等级</td><td class="spec-value">功率柜 IP55 / 终端 IP54</td></tr>
+                  <tr><td class="spec-label">噪声</td><td class="spec-value">≤ 65dB</td></tr>
+                  <tr><td class="spec-label">支持协议</td><td class="spec-value">GB/T、ChaoJi 预留</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- DC 600kW -->
+          <div class="product-card" onclick="toggleCard(this)">
+            <div class="product-card-header">
+              <div class="product-card-left">
+                <div class="product-icon dc">⚡</div>
+                <div>
+                  <div class="product-name">600kW 超级充电堆</div>
+                  <div class="product-model">TCZ-600S / 液冷超充</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div class="product-tags">
+                  <span class="product-tag tag-star">旗舰</span>
+                  <span class="product-tag tag-new">新一代</span>
+                </div>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="product-card-body">
+              <div class="product-card-content">
+                <p class="product-desc">
+                  面向超充场景的旗舰产品，支持单枪 600kW 极速充电，5 分钟补能 200km+。全液冷架构，适配 800V 高压平台车型，是高端品牌充电站的首选方案。
+                </p>
+                <table class="spec-table">
+                  <tr><td class="spec-label">额定功率</td><td class="spec-value spec-highlight">600kW</td></tr>
+                  <tr><td class="spec-label">输出电压范围</td><td class="spec-value">200–1000V DC</td></tr>
+                  <tr><td class="spec-label">最大输出电流</td><td class="spec-value">600A（液冷枪线）</td></tr>
+                  <tr><td class="spec-label">充电终端数</td><td class="spec-value">最多 8 终端</td></tr>
+                  <tr><td class="spec-label">散热方式</td><td class="spec-value">全液冷（模块+枪线）</td></tr>
+                  <tr><td class="spec-label">转换效率</td><td class="spec-value spec-highlight">≥ 97.5%</td></tr>
+                  <tr><td class="spec-label">防护等级</td><td class="spec-value">IP55</td></tr>
+                  <tr><td class="spec-label">支持车型</td><td class="spec-value">800V 平台 / 兼容 400V</td></tr>
+                  <tr><td class="spec-label">5 分钟续航</td><td class="spec-value spec-highlight">≈ 200km+</td></tr>
+                </table>
+
+                <div class="tip-box">
+                  <div class="tip-icon">💡</div>
+                  <div class="tip-content">
+                    <strong>销售话术提示：</strong>600kW 超充堆是目前行业领先的超充方案，可重点强调"5 分钟 200 公里"的用户体验提升，以及全液冷带来的低噪声、高可靠性优势。适用于高端品牌 4S 店、城市核心区超充站。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Product Section: AC Charger -->
+      <section class="section fade-in" id="ac-charger">
+        <div class="section-header">
+          <span class="section-number">02</span>
+          <h2 class="section-title">交流充电桩</h2>
+        </div>
+
+        <div class="product-grid">
+          <div class="product-card" onclick="toggleCard(this)">
+            <div class="product-card-header">
+              <div class="product-card-left">
+                <div class="product-icon ac">🔌</div>
+                <div>
+                  <div class="product-name">7kW / 11kW 交流充电桩</div>
+                  <div class="product-model">TCA-7A / TCA-11A / 家用/目的地</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div class="product-tags">
+                  <span class="product-tag tag-hot">热销</span>
+                </div>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="product-card-body">
+              <div class="product-card-content">
+                <p class="product-desc">
+                  适用于住宅小区、写字楼、酒店等目的地充电场景。壁挂式/立柱式安装，体积小巧、安装便捷。支持扫码充电、即插即充、预约充电等多种启动方式。
+                </p>
+                <table class="spec-table">
+                  <tr><td class="spec-label">额定功率</td><td class="spec-value">7kW / 11kW</td></tr>
+                  <tr><td class="spec-label">输出电压</td><td class="spec-value">AC 220V（7kW）/ AC 380V（11kW）</td></tr>
+                  <tr><td class="spec-label">最大输出电流</td><td class="spec-value">32A</td></tr>
+                  <tr><td class="spec-label">充电枪</td><td class="spec-value">单枪 / Type 2 接口</td></tr>
+                  <tr><td class="spec-label">启动方式</td><td class="spec-value">扫码 / 刷卡 / 即插即充</td></tr>
+                  <tr><td class="spec-label">防护等级</td><td class="spec-value">IP65</td></tr>
+                  <tr><td class="spec-label">工作温度</td><td class="spec-value">-30°C ~ +55°C</td></tr>
+                  <tr><td class="spec-label">安装方式</td><td class="spec-value">壁挂 / 立柱</td></tr>
+                  <tr><td class="spec-label">通信</td><td class="spec-value">4G / WiFi / 蓝牙</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card" onclick="toggleCard(this)">
+            <div class="product-card-header">
+              <div class="product-card-left">
+                <div class="product-icon ac">🔌</div>
+                <div>
+                  <div class="product-name">40kW / 60kW 交流一体桩</div>
+                  <div class="product-model">TCA-40B / TCA-60B / 商用</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="product-card-body">
+              <div class="product-card-content">
+                <p class="product-desc">
+                  面向商用场景的大功率交流桩，适合车队运营、出租车场站等对充电速度有一定要求的场景。支持 OCPP 协议，可接入第三方平台管理。
+                </p>
+                <table class="spec-table">
+                  <tr><td class="spec-label">额定功率</td><td class="spec-value">40kW / 60kW</td></tr>
+                  <tr><td class="spec-label">输出电压</td><td class="spec-value">AC 380V 三相</td></tr>
+                  <tr><td class="spec-label">最大输出电流</td><td class="spec-value">80A / 120A</td></tr>
+                  <tr><td class="spec-label">充电枪</td><td class="spec-value">双枪</td></tr>
+                  <tr><td class="spec-label">平台协议</td><td class="spec-value">OCPP 1.6 / 2.0</td></tr>
+                  <tr><td class="spec-label">防护等级</td><td class="spec-value">IP54</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Product Section: Charging Stack -->
+      <section class="section fade-in" id="charging-stack">
+        <div class="section-header">
+          <span class="section-number">03</span>
+          <h2 class="section-title">充电堆 / 群充系统</h2>
+        </div>
+
+        <div class="product-grid">
+          <div class="product-card" onclick="toggleCard(this)">
+            <div class="product-card-header">
+              <div class="product-card-left">
+                <div class="product-icon stack">🏗️</div>
+                <div>
+                  <div class="product-name">群充群控系统</div>
+                  <div class="product-model">TCZ-QC Series / 功率池共享</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div class="product-tags">
+                  <span class="product-tag tag-star">旗舰</span>
+                </div>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="product-card-body">
+              <div class="product-card-content">
+                <p class="product-desc">
+                  特锐德核心竞争力产品——功率池共享技术。多台充电终端共享一个功率池，系统根据各车辆 SOC 和需求动态调配功率，大幅提升设备利用率和场站周转率。
+                </p>
+                <table class="spec-table">
+                  <tr><td class="spec-label">功率池容量</td><td class="spec-value">360kW / 480kW / 720kW</td></tr>
+                  <tr><td class="spec-label">终端数量</td><td class="spec-value">6 / 8 / 12 终端</td></tr>
+                  <tr><td class="spec-label">单枪最大功率</td><td class="spec-value">240kW</td></tr>
+                  <tr><td class="spec-label">分配策略</td><td class="spec-value spec-highlight">智能动态功率分配（SOC 感知）</td></tr>
+                  <tr><td class="spec-label">扩容方式</td><td class="spec-value">模块热插拔，在线扩容</td></tr>
+                  <tr><td class="spec-label">转换效率</td><td class="spec-value">≥ 96%</td></tr>
+                  <tr><td class="spec-label">适用场景</td><td class="spec-value">大型公共站、公交场站、物流园</td></tr>
+                </table>
+
+                <div class="tip-box">
+                  <div class="tip-icon">💡</div>
+                  <div class="tip-content">
+                    <strong>核心卖点：</strong>群充群控系统通过功率池共享，可将设备利用率从传统的 15%–20% 提升至 40%+，帮助运营商显著缩短投资回报周期。这是特锐德区别于竞争对手的关键技术优势。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Product Section: Box Substation -->
+      <section class="section fade-in" id="box-substation">
+        <div class="section-header">
+          <span class="section-number">04</span>
+          <h2 class="section-title">箱式变电站</h2>
+        </div>
+
+        <div class="product-grid">
+          <div class="product-card" onclick="toggleCard(this)">
+            <div class="product-card-header">
+              <div class="product-card-left">
+                <div class="product-icon box">🏭</div>
+                <div>
+                  <div class="product-name">新能源汽车专用箱变</div>
+                  <div class="product-model">ZBW Series / 充电配电一体化</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div class="product-tags">
+                  <span class="product-tag tag-hot">热销</span>
+                </div>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="product-card-body">
+              <div class="product-card-content">
+                <p class="product-desc">
+                  特锐德传统优势产品，集变压器、高低压配电、计量、保护于一体。为充电场站提供完整的供配电解决方案，工厂预制、现场快速安装，大幅缩短建设周期。
+                </p>
+                <table class="spec-table">
+                  <tr><td class="spec-label">容量范围</td><td class="spec-value">315kVA – 2500kVA</td></tr>
+                  <tr><td class="spec-label">高压侧</td><td class="spec-value">10kV / 20kV</td></tr>
+                  <tr><td class="spec-label">低压侧</td><td class="spec-value">0.4kV（三相四线）</td></tr>
+                  <tr><td class="spec-label">变压器类型</td><td class="spec-value">干式 / 油浸式可选</td></tr>
+                  <tr><td class="spec-label">智能监控</td><td class="spec-value spec-highlight">远程四遥（遥测、遥信、遥控、遥调）</td></tr>
+                  <tr><td class="spec-label">防护等级</td><td class="spec-value">IP43（箱体）</td></tr>
+                  <tr><td class="spec-label">安装周期</td><td class="spec-value spec-highlight">7–15 天（含土建）</td></tr>
+                  <tr><td class="spec-label">使用寿命</td><td class="spec-value">≥ 25 年</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Product Section: Energy Storage -->
+      <section class="section fade-in" id="energy-cabinet">
+        <div class="section-header">
+          <span class="section-number">05</span>
+          <h2 class="section-title">储能柜</h2>
+        </div>
+
+        <div class="product-grid">
+          <div class="product-card" onclick="toggleCard(this)">
+            <div class="product-card-header">
+              <div class="product-card-left">
+                <div class="product-icon box">🔋</div>
+                <div>
+                  <div class="product-name">光储充一体化储能柜</div>
+                  <div class="product-model">TES-215 / 储能+充电协同</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div class="product-tags">
+                  <span class="product-tag tag-new">新一代</span>
+                </div>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="product-card-body">
+              <div class="product-card-content">
+                <p class="product-desc">
+                  集光伏接入、储能电池、能量管理系统于一体。可实现削峰填谷、需量管理，降低充电站用电成本。配合充电桩形成光储充闭环，助力绿色能源转型。
+                </p>
+                <table class="spec-table">
+                  <tr><td class="spec-label">储能容量</td><td class="spec-value">215kWh（可扩展）</td></tr>
+                  <tr><td class="spec-label">额定功率</td><td class="spec-value">100kW</td></tr>
+                  <tr><td class="spec-label">电池类型</td><td class="spec-value">磷酸铁锂（LFP）</td></tr>
+                  <tr><td class="spec-label">循环寿命</td><td class="spec-value spec-highlight">≥ 6000 次（80% DOD）</td></tr>
+                  <tr><td class="spec-label">光伏接入</td><td class="spec-value">支持（MPPT）</td></tr>
+                  <tr><td class="spec-label">并离网</td><td class="spec-value">支持并网 / 离网切换</td></tr>
+                  <tr><td class="spec-label">消防系统</td><td class="spec-value">气溶胶 + 液冷温控</td></tr>
+                  <tr><td class="spec-label">防护等级</td><td class="spec-value">IP55（户外型）</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Application Scenarios -->
+      <section class="section fade-in">
+        <div class="section-header">
+          <span class="section-number">06</span>
+          <h2 class="section-title">典型应用场景</h2>
+        </div>
+        <div class="scenario-grid">
+          <div class="scenario-card">
+            <div class="scenario-icon">🏙️</div>
+            <div class="scenario-name">城市公共充电站</div>
+            <div class="scenario-desc">240kW/360kW 直充 + 群充系统，配合箱变，服务网约车、私家车高频补电需求。</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-icon">🛣️</div>
+            <div class="scenario-name">高速服务区超充站</div>
+            <div class="scenario-desc">600kW 超充堆 + 储能柜，解决节假日高峰排队问题，实现"即停即充即走"。</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-icon">🏢</div>
+            <div class="scenario-name">商业地产目的地充电</div>
+            <div class="scenario-desc">7kW/11kW 交流桩群部署，低成本覆盖大量停车位，提升物业增值服务。</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-icon">🚚</div>
+            <div class="scenario-name">物流园区专用站</div>
+            <div class="scenario-desc">群充群控 + 大容量箱变，支持电动重卡、物流车夜间集中充电调度。</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-icon">🚌</div>
+            <div class="scenario-name">公交场站</div>
+            <div class="scenario-desc">大功率直流充电桩 + 专用箱变，满足公交车白天快充、夜间慢充的运营模式。</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-icon">☀️</div>
+            <div class="scenario-name">光储充一体化站</div>
+            <div class="scenario-desc">光伏 + 储能 + 充电桩协同，实现绿色能源自给，降低运营电费 30%+。</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comparison Table -->
+      <section class="section fade-in" id="compare">
+        <div class="section-header">
+          <span class="section-number">07</span>
+          <h2 class="section-title">产品横向对比</h2>
+        </div>
+
+        <div class="compare-table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>PARAMETER</th>
+                <th>TCZ-240A</th>
+                <th>TCZ-360B</th>
+                <th>TCZ-600S</th>
+                <th>TCA-11A</th>
+                <th>群充系统</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>额定功率</td>
+                <td>240kW</td>
+                <td>360kW</td>
+                <td class="val-hot">600kW</td>
+                <td>11kW</td>
+                <td>360–720kW</td>
+              </tr>
+              <tr>
+                <td>充电类型</td>
+                <td>直流</td>
+                <td>直流</td>
+                <td>直流超充</td>
+                <td>交流</td>
+                <td>直流</td>
+              </tr>
+              <tr>
+                <td>枪数/终端</td>
+                <td>2 枪</td>
+                <td>最多 6 终端</td>
+                <td>最多 8 终端</td>
+                <td>1 枪</td>
+                <td>6–12 终端</td>
+              </tr>
+              <tr>
+                <td>散热方式</td>
+                <td>风冷</td>
+                <td class="val-hot">液冷</td>
+                <td class="val-hot">全液冷</td>
+                <td>自然散热</td>
+                <td>风冷/液冷</td>
+              </tr>
+              <tr>
+                <td>转换效率</td>
+                <td>≥ 96%</td>
+                <td>≥ 96.5%</td>
+                <td class="val-hot">≥ 97.5%</td>
+                <td>—</td>
+                <td>≥ 96%</td>
+              </tr>
+              <tr>
+                <td>防护等级</td>
+                <td>IP54</td>
+                <td>IP55</td>
+                <td>IP55</td>
+                <td>IP65</td>
+                <td>IP54–IP55</td>
+              </tr>
+              <tr>
+                <td>核心场景</td>
+                <td>公共站</td>
+                <td>大型场站</td>
+                <td>超充旗舰站</td>
+                <td>目的地</td>
+                <td>大型/公交</td>
+              </tr>
+              <tr>
+                <td>价格区间</td>
+                <td>中</td>
+                <td>中高</td>
+                <td>高</td>
+                <td class="val-hot">低</td>
+                <td>中高</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Glossary -->
+      <section class="section fade-in" id="glossary">
+        <div class="section-header">
+          <span class="section-number">08</span>
+          <h2 class="section-title">专业术语词典</h2>
+        </div>
+
+        <div class="glossary-filter">
+          <button class="filter-btn active" onclick="filterGlossary('all', this)">全部</button>
+          <button class="filter-btn" onclick="filterGlossary('charging', this)">充电技术</button>
+          <button class="filter-btn" onclick="filterGlossary('power', this)">电力配电</button>
+          <button class="filter-btn" onclick="filterGlossary('standard', this)">标准协议</button>
+          <button class="filter-btn" onclick="filterGlossary('business', this)">商务术语</button>
+        </div>
+
+        <div class="glossary-list" id="glossaryList">
+
+          <div class="glossary-item" data-cat="charging" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">SOC</span>
+                <span class="glossary-abbr">State of Charge</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                <strong>电池荷电状态</strong>，表示电池当前剩余电量与满电容量的百分比。SOC = 100% 表示满电，SOC = 0% 表示完全放电。<br>
+                充电桩通过与车辆 BMS 通信获取 SOC 值，用于智能功率分配和充电策略优化。
+                <div class="glossary-example">💡 例："该车辆当前 SOC 为 30%，预计充电至 80% 需要约 25 分钟。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="charging" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">BMS</span>
+                <span class="glossary-abbr">Battery Management System</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                <strong>电池管理系统</strong>，是电动汽车动力电池的核心控制单元，负责监测电池电压、电流、温度，管理充放电过程，确保电池安全运行。<br>
+                充电桩与 BMS 通过 CAN 总线通信，实时交换充电参数。
+                <div class="glossary-example">💡 例："充电桩通过与车辆 BMS 协商，动态调整输出电流以保护电池寿命。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="charging" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">功率模块</span>
+                <span class="glossary-en">Power Module</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                直流充电桩的核心部件，负责将交流电转换为直流电。单个功率模块通常为 <strong>20kW / 30kW / 40kW</strong>，多个模块并联组成充电桩的总输出功率。<br>
+                模块支持热插拔，单个模块故障不影响整机运行，是充电桩可靠性的关键设计。
+                <div class="glossary-example">💡 例："240kW 充电桩内部配置了 6 个 40kW 功率模块，单模块故障时其余模块自动补位。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="charging" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">功率池共享</span>
+                <span class="glossary-en">Power Pool Sharing</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                特锐德群充系统的核心技术。将所有功率模块组成一个"功率池"，多个充电终端共享池内功率。<br>
+                系统根据各车辆的 <strong>SOC、电池参数、充电需求</strong> 实时动态分配功率，避免功率浪费，提升整体利用率。
+                <div class="glossary-example">💡 例："720kW 功率池服务 12 个终端，当只有 3 台车充电时，每台可获得 240kW 满功率。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="charging" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">液冷充电</span>
+                <span class="glossary-en">Liquid-Cooled Charging</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                采用液体冷却技术对充电枪线和功率模块进行散热。相比传统风冷，液冷可以支持 <strong>更大电流（400A–600A）</strong>，同时显著降低噪声。<br>
+                液冷枪线更细更轻，用户体验更好。是超充（≥ 360kW）场景的必备技术。
+                <div class="glossary-example">💡 例："液冷枪线直径仅 22mm，重量比传统枪线减轻 40%，女性用户也能轻松操作。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="charging" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">SOH</span>
+                <span class="glossary-abbr">State of Health</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                <strong>电池健康状态</strong>，表示电池当前容量与出厂额定容量的比值。SOH 反映电池的老化程度，新电池 SOH ≈ 100%，一般降至 80% 以下认为需要更换。
+                <div class="glossary-example">💡 例："该车行驶 15 万公里后，电池 SOH 仍保持在 92%，电池衰减控制良好。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="charging" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">充电倍率</span>
+                <span class="glossary-en">C-Rate</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                表示充电电流相对于电池容量的倍数。<strong>1C</strong> 表示 1 小时充满，<strong>2C</strong> 表示 30 分钟充满，<strong>4C</strong> 表示 15 分钟充满。<br>
+                超充车型通常支持 2C–4C 充电倍率，是超充桩发挥性能的前提。
+                <div class="glossary-example">💡 例："该车型支持 4C 充电倍率，搭配 600kW 超充桩可实现 10%–80% 仅需 12 分钟。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="charging" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">800V 高压平台</span>
+                <span class="glossary-en">800V High-Voltage Platform</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                新一代电动汽车的电气架构标准，将电池系统电压从传统 400V 提升至 800V。在相同功率下，<strong>电流减半</strong>，线束更细、损耗更低、充电更快。<br>
+                需搭配支持高压输出的超充桩才能发挥全部性能。
+                <div class="glossary-example">💡 例："800V 平台车型在 600kW 超充桩上，充电峰值功率可达 400kW 以上。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="standard" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">GB/T</span>
+                <span class="glossary-abbr">国标推荐标准</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                中国电动汽车充电领域的强制性国家标准系列：<br>
+                <strong>GB/T 18487</strong> — 传导充电系统通用要求<br>
+                <strong>GB/T 27930</strong> — 非车载传导式充电机与 BMS 通信协议<br>
+                <strong>GB/T 20234</strong> — 充电连接装置（充电枪/插座）标准<br>
+                所有在中国销售的充电桩必须符合 GB/T 标准。
+                <div class="glossary-example">💡 例："我们的全系产品均通过 GB/T 认证，兼容市面所有国标车型。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="standard" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">ChaoJi</span>
+                <span class="glossary-abbr">超级充电接口标准</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                中日联合制定的下一代大功率充电标准，支持 <strong>900V / 600A</strong> 以上，理论最大功率可达 500kW+。<br>
+                兼容现有 GB/T 和日本 CHAdeMO 标准，是未来超充的统一方向。特锐德产品已预留 ChaoJi 接口兼容能力。
+                <div class="glossary-example">💡 例："TCZ-600S 已预留 ChaoJi 接口，标准落地后可通过模块升级快速适配。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="standard" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">OCPP</span>
+                <span class="glossary-abbr">Open Charge Point Protocol</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                <strong>开放充电点协议</strong>，国际通用的充电桩与平台之间的通信标准。支持远程启停、计费、监控、固件升级等功能。<br>
+                常见版本为 OCPP 1.6 和 OCPP 2.0。支持 OPP 意味着充电桩可接入第三方运营平台。
+                <div class="glossary-example">💡 例："该型号支持 OCPP 1.6 协议，可无缝接入贵公司现有的充电管理平台。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="power" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">箱式变电站</span>
+                <span class="glossary-en">Box-Type Substation</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                将变压器、高压开关柜、低压配电柜等设备集成在一个金属箱体内的成套变配电装置。<br>
+                特点：<strong>工厂预制、现场安装快、占地面积小、可移动</strong>。是充电场站供配电的核心设备。
+                <div class="glossary-example">💡 例："一个 500kVA 箱变可满足 10 台 240kW 充电桩的用电需求。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="power" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">kVA 与 kW 的区别</span>
+                <span class="glossary-en">Apparent vs Active Power</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                <strong>kVA（千伏安）</strong>是视在功率，表示变压器的总容量；<strong>kW（千瓦）</strong>是有功功率，即实际做功的功率。<br>
+                两者关系：<strong>kW = kVA × 功率因数（cos φ）</strong>，一般充电场景功率因数约 0.95。<br>
+                例：800kVA 箱变实际可提供约 760kW 有功功率。
+                <div class="glossary-example">💡 例："选用 800kVA 箱变，按 0.95 功率因数计算，可支撑约 760kW 的充电负荷。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="power" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">需量管理</span>
+                <span class="glossary-en">Demand Management</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                电力公司对大工业用户按"最大需量"（当月 15 分钟平均最大功率）收取基本电费。<br>
+                通过储能系统和智能调度，<strong>削平用电峰值</strong>，降低最大需量值，从而节省电费支出。是储能产品的重要卖点之一。
+                <div class="glossary-example">💡 例："配置储能柜后，场站最大需量从 800kW 降至 500kW，每月节省基本电费约 2.4 万元。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="power" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">削峰填谷</span>
+                <span class="glossary-en">Peak Shaving & Valley Filling</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                利用储能系统在电价低谷时段（夜间）充电储能，在电价高峰时段（白天）放电供充电桩使用。<br>
+                通过 <strong>峰谷电价差</strong> 获得收益，降低充电站整体用电成本。一般可节省 20%–35% 电费。
+                <div class="glossary-example">💡 例："当地峰谷电价差 0.7 元/kWh，215kWh 储能柜每天两充两放可节省约 300 元。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="business" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">利用率</span>
+                <span class="glossary-en">Utilization Rate</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                充电桩实际充电时间占总可用时间的比例。行业平均利用率约 <strong>10%–20%</strong>，优秀场站可达 30%+。<br>
+                利用率是衡量充电站投资回报的核心指标。群充群控系统通过功率共享可显著提升利用率。
+                <div class="glossary-example">💡 例："采用群充系统后，场站利用率从 15% 提升至 38%，投资回收期缩短 1.5 年。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="business" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">度电服务费</span>
+                <span class="glossary-en">Service Fee per kWh</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                充电运营商在电费基础上额外收取的服务费用，是运营商的主要收入来源之一。<br>
+                各地政策不同，一般在 <strong>0.3–0.8 元/kWh</strong> 之间。部分城市有政府指导价上限。
+                <div class="glossary-example">💡 例："当地电费 0.6 元，服务费 0.5 元，用户总充电成本 1.1 元/kWh。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="business" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">投建运营一体化</span>
+                <span class="glossary-en">Invest-Build-Operate Integration</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                特锐德/特来电的核心商业模式之一。从场站选址、电力报装、设备采购安装、平台接入到后期运维，提供 <strong>全生命周期一站式服务</strong>。<br>
+                大客户可选择设备采购、合作共建、BOT（建设-运营-移交）等多种合作模式。
+                <div class="glossary-example">💡 例："我们提供从电力方案设计到运营平台的全链条服务，客户零经验也能快速入场。"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glossary-item" data-cat="business" onclick="toggleGlossary(this)">
+            <div class="glossary-head">
+              <div class="glossary-term">
+                <span class="glossary-cn">SaaS 平台</span>
+                <span class="glossary-abbr">Software as a Service</span>
+              </div>
+              <span class="glossary-arrow">▶</span>
+            </div>
+            <div class="glossary-detail">
+              <div class="glossary-detail-inner">
+                特来电提供的云端充电运营管理平台，支持 <strong>设备监控、订单管理、财务结算、数据分析、用户运营</strong> 等功能。<br>
+                客户无需自建 IT 系统，通过 SaaS 平台即可实现充电站的数字化运营。
+                <div class="glossary-example">💡 例："通过特来电 SaaS 平台，客户可在手机上实时查看所有场站的充电数据和收入报表。"</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Back to Top -->
+  <div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+  <script>
+    // Toggle product card
+    function toggleCard(card) {
+      card.classList.toggle('open');
+    }
+
+    // Toggle glossary item
+    function toggleGlossary(item) {
+      item.classList.toggle('expanded');
+    }
+
+    // Set active nav item
+    function setActive(el) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      el.classList.add('active');
+      document.querySelector('.sidebar').classList.remove('open');
+      // Update breadcrumb
+      const text = el.textContent.trim();
+      document.getElementById('currentSection').textContent = text;
+    }
+
+    // Filter glossary
+    function filterGlossary(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.glossary-item').forEach(item => {
+        if (cat === 'all' || item.dataset.cat === cat) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // Search
+    function handleSearch(query) {
+      const q = query.toLowerCase().trim();
+      if (!q) {
+        document.querySelectorAll('.section').forEach(s => s.style.display = '');
+        document.querySelectorAll('.glossary-item').forEach(i => i.style.display = '');
+        return;
+      }
+      // Search glossary items
+      document.querySelectorAll('.glossary-item').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(q) ? '' : 'none';
+      });
+      // Search product cards
+      document.querySelectorAll('.product-card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const match = text.includes(q);
+        card.style.display = match ? '' : 'none';
+        if (match) card.classList.add('open');
+      });
+    }
+
+    // Back to top visibility
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('backTop');
+      if (window.scrollY > 400) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    });
+
+    // Intersection observer for active nav tracking
+    const sections = document.querySelectorAll('section[id]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          const navItem = document.querySelector(`.nav-item[href="#${id}"]`);
+          if (navItem) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            navItem.classList.add('active');
+            document.getElementById('currentSection').textContent = navItem.textContent.trim();
+          }
+        }
+      });
+    }, { rootMargin: '-80px 0px -60% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
